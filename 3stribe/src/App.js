@@ -10,6 +10,7 @@ class App extends Component {
     this.handleEnter = this.handleEnter.bind(this)
     this.handleLeave = this.handleLeave.bind(this)
     this.handleClick = this.handleClick.bind(this)
+    this.updateScore = this.updateScore.bind()
     this.gameOver = this.gameOver.bind(this)
     this.startAgain = this.startAgain.bind(this)
  
@@ -55,7 +56,7 @@ handleEnter = (event) => {
     return event.target.innerHTML = "X"
   }
   const decideSign = () => {
-    return this.state.sign === this.state.players[0].sign ? changeToO() : changeToX();}
+    return this.state.sign === "X"? changeToO() : changeToX();}
 
   const eventIndex = (parseInt(event.target.id)-1)
   this.state.fields[eventIndex].isClicked === false && !this.state.gameOver && decideSign()
@@ -69,6 +70,19 @@ handleLeave = (event) => {
   }
   this.state.fields[eventIndex].isClicked === false && backToSign()
 }
+
+updateScore = () => {
+  if(this.state.sign === "O") {
+      let playerOne = this.state.players[0]
+      let newScore = playerOne.score ++
+      this.setState({playerOne: newScore})
+      } else if (this.state.sign === "X"){
+        let playerOne = this.state.players[1]
+        let newScore = playerOne.score ++
+        this.setState({playerOne: newScore})
+      } else {
+        console.log("An error occured.")
+      }}
 
 // This is where a lot of the magic happens. Watch comments below.
 handleClick = event => {
@@ -98,9 +112,22 @@ handleClick = event => {
     //this.setState(clickedPropertyClickedSrc)
     //Ghosted on 12th of april. Delete code on 14th of april if app is stilling working.
 
+    const playerOne = this.state.players[0]
+    const playerTwo = this.state.players[1]
 
-    this.gameOver()
+    if (playerOne.turn === true) {
+      playerOne.turn = false
+      playerTwo.turn = true
+    } else {
+      playerOne.turn = true
+      playerTwo.turn = false
+    }
     console.log(this.state)
+    this.setState({playerOne})
+    this.setState({playerTwo})
+
+
+    this.gameOver(event)
   } else if (clickedPropertyClicked.isClicked === true && this.state.gameOver === true) {
     console.log("It has already been clicked - and the round is already over anyway.")
   } else if (clickedPropertyClicked.isClicked === true) {
@@ -110,7 +137,91 @@ handleClick = event => {
   }
 }
 
-gameOver = () => {
+gameOver = (event) => {
+
+  //creates variable names for fields to check
+  const eventIndex = event.target.id -1
+  
+  // row variables
+  const currentField = this.state.fields[eventIndex]
+  const fieldPlusOne = this.state.fields[eventIndex +1]
+  const fieldPlusTwo = this.state.fields[eventIndex +2]
+  const fieldSubOne = this.state.fields[eventIndex -1]
+  const fieldSubTwo = this.state.fields[eventIndex -2]
+
+  //column variables
+
+  const fieldPlusThree = this.state.fields[eventIndex +3]
+  const fieldPlusSix = this.state.fields[eventIndex +6]
+  const fieldSubThree = this.state.fields[eventIndex -3]
+  const fieldSubSix = this.state.fields[eventIndex -6]
+  
+  // mixed line variables
+/*
+  const rowPlusOne = this.state.fields[eventIndex].row
+  const fieldPlusSix = this.state.fields[eventIndex +6]
+  const fieldSubThree = this.state.fields[eventIndex -3]
+  const fieldSubSix = this.state.fields[eventIndex -6]*/
+
+    // logic or setting game to over when 3 in a row:
+    if (fieldPlusOne !== undefined && fieldPlusOne.fieldSign === currentField.fieldSign && fieldPlusOne.row === currentField.row && fieldPlusTwo !== undefined && fieldPlusTwo.fieldSign === currentField.fieldSign && fieldPlusTwo.row === currentField.row) {
+      this.setState({gameOver: true})
+      this.updateScore()
+
+    
+  } else if (fieldPlusOne !== undefined && fieldPlusOne.fieldSign === currentField.fieldSign && fieldPlusOne.row === currentField.row && fieldSubOne !== undefined && fieldSubOne.fieldSign === currentField.fieldSign && fieldSubOne.row === currentField.row) {
+      this.setState({gameOver: true})
+      this.updateScore()
+  
+  }  else if (fieldSubOne !== undefined && fieldSubOne.fieldSign === currentField.fieldSign && fieldSubOne.row === currentField.row && fieldSubTwo !== undefined && fieldSubTwo.fieldSign === currentField.fieldSign && fieldSubTwo.row === currentField.row) {
+      this.setState({gameOver: true})
+      this.updateScore()
+    }
+  
+    
+    //logic for setting game to over when 3 in column:
+
+    if (fieldPlusThree !== undefined && fieldPlusThree.fieldSign === currentField.fieldSign && fieldPlusThree.column === currentField.column && fieldPlusSix !== undefined && fieldPlusSix.fieldSign === currentField.fieldSign && fieldPlusSix.column=== currentField.column) {
+      this.setState({gameOver: true})
+      this.updateScore()
+    } 
+    
+    else if (fieldPlusThree !== undefined && fieldPlusThree.fieldSign === currentField.fieldSign && fieldPlusThree.column === currentField.column && fieldSubThree !== undefined && fieldSubThree.fieldSign === currentField.fieldSign && fieldSubThree.column === currentField.column) {
+      this.setState({gameOver: true})
+      this.updateScore()
+    }  
+    
+    else if (fieldSubThree !== undefined && fieldSubThree.fieldSign === currentField.fieldSign && fieldSubThree.column === currentField.column && fieldSubSix !== undefined && fieldSubSix.fieldSign === currentField.fieldSign && fieldSubSix.column === currentField.column) {
+      this.setState({gameOver: true})
+      this.updateScore()
+  
+  }
+
+  if (this.state.gameOver === true) {
+    this.updateScore()
+  }
+    //logic for setting game to over when 3 in a mixed line:
+
+   /* {if (fieldPlusThree !== undefined && fieldPlusThree.fieldSign === currentField.fieldSign && fieldPlusThree.column === currentField.column && fieldPlusSix !== undefined && fieldPlusSix.fieldSign === currentField.fieldSign && fieldPlusSix.column=== currentField.column) {
+      this.setState({gameOver: true})
+      console.log("hi")
+  } else if (fieldPlusThree !== undefined && fieldPlusThree.fieldSign === currentField.fieldSign && fieldPlusThree.column === currentField.column && fieldSubThree !== undefined && fieldSubThree.fieldSign === currentField.fieldSign && fieldSubThree.column === currentField.column) {
+    this.setState({gameOver: true})
+  }  else if (fieldSubThree !== undefined && fieldSubThree.fieldSign === currentField.fieldSign && fieldSubThree.column === currentField.column && fieldSubSix !== undefined && fieldSubSix.fieldSign === currentField.fieldSign && fieldSubSix.column === currentField.column) {
+    this.setState({gameOver: true})
+  }  else {
+
+    console.log("something happened")
+    console.log(fieldSubThree)
+    console.log(fieldSubSix)}
+
+  } */
+
+  
+//}}
+
+  /*
+ 
   if (this.state.fields[0].isClicked && this.state.fields[1].isClicked && this.state.fields[2].isClicked && 
     this.state.fields[3].isClicked && this.state.fields[4].isClicked && this.state.fields[5].isClicked &&
     this.state.fields[6].isClicked && this.state.fields[7].isClicked && this.state.fields[8].isClicked)
@@ -229,23 +340,24 @@ gameOver = () => {
       let currentScore = this.state.players[1]
       currentScore.score++
       this.setState({currentScore})
+    }*/
+  //}
     }
-  }
 
 startAgain = () => {
   const initialState = {
     fields: [
-      {id: 1, isClicked: false, imgSrc: ""},
-      {id: 2, isClicked: false, imgSrc: ""},
-      {id: 3, isClicked: false, imgSrc: ""},
-  
-      {id: 4, isClicked: false, imgSrc: ""},
-      {id: 5, isClicked: false, imgSrc: ""},
-      {id: 6, isClicked: false, imgSrc: ""},
-  
-      {id: 7, isClicked: false, imgSrc: ""},
-      {id: 8, isClicked: false, imgSrc: ""},
-      {id: 9, isClicked: false, imgSrc: ""}
+      {id: 1, isClicked: false, imgSrc: "", fieldSign: "", row: 1, column: 1},
+        {id: 2, isClicked: false, imgSrc: "", fieldSign: "", row: 1, column: 2},
+        {id: 3, isClicked: false, imgSrc: "", fieldSign: "", row: 1, column: 3},
+    
+        {id: 4, isClicked: false, imgSrc: "", fieldSign: "", row: 2, column: 1},
+        {id: 5, isClicked: false, imgSrc: "", fieldSign: "", row: 2, column: 2},
+        {id: 6, isClicked: false, imgSrc: "", fieldSign: "", row: 2, column: 3},
+    
+        {id: 7, isClicked: false, imgSrc: "", fieldSign: "", row: 3, column: 1},
+        {id: 8, isClicked: false, imgSrc: "", fieldSign: "", row: 3, column: 2},
+        {id: 9, isClicked: false, imgSrc: "", fieldSign: "", row: 3, column: 3}
     ],
     sign: "O",
     gameOver: false,
