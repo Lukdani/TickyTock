@@ -1,11 +1,11 @@
   #gameHeading {
     margin: 0;
     padding: 0;
-    font-size: 50px;
+    font-size: 30px;
   }
   
   .gameHeader {
-    margin-top: 20px;
+    margin-top: 10px;
     width: 30%;
     margin-right: auto;
     margin-left: auto;
@@ -49,7 +49,8 @@
     display:grid;
     height: 140px;
     border: 1px solid #fff;
-    background-color: #38828F;
+    /*background-color: #38828F;*/
+    background-color: #266DD3;
     align-items: center;
     font-size: 110px;
     padding:0;
@@ -59,7 +60,8 @@
   }
   
   .field:hover {
-    background-color: #442E39;
+    /*background-color: #442E39;*/
+    background-color: #292F36;
     cursor:pointer;
     color: #fff;
   }
@@ -89,11 +91,11 @@
   #playerOneScore {
     flex: 1;
     font-size: 26px;
-    color:green;
+    color:#2E5339;
   }
   
   #playerTwoScore {
     flex: 1;
     font-size: 26px;
-    color:blue;
+    color:#6C0E23;
   }

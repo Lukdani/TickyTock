@@ -3,8 +3,9 @@
   font-family: 'ubuntu condensed';
   margin: 0;
   padding: 0;
+  background-color: #ffffff
 }
 
 .content {
-  margin-top: 80px;
+  margin-top: 60px;
 }

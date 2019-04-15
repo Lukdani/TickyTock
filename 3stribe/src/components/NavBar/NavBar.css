@@ -10,7 +10,9 @@
     background-color: rgba(255, 255, 255, 0.97);
     top: 0px;
     z-index: 1;
-    box-shadow: 0px 2px 10px #999;
+    -webkit-box-shadow: 0px 10px 109px -48px rgba(225,232,227,0.59);
+    -moz-box-shadow: 0px 10px 109px -48px rgba(225,232,227,0.59);
+    box-shadow: 0px 10px 109px -48px rgba(225,232,227,0.59);
 }
 
 .brand {
@@ -19,7 +21,7 @@
     flex: 1;
     font-family: 'ubuntu Condensed';
     color: #fff;
-    background-color: #00120B;
+    background-color: #292F36;
     padding: 2px 10px;
     border-radius: 10px;
     margin-left: 30px;

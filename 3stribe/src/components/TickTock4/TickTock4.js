@@ -49,7 +49,7 @@ class TickTock4 extends Component {
   createArray = (array) => {
     const rowOfFields = array.map(field => {
       return(
-      <div key={field.id} id={field.id} className="field" onMouseEnter={this.handleEnter} onMouseLeave={this.handleLeave} onClick={this.handleClick}>{field.imgSrc}</div>
+      <div key={field.id} id={field.id} className="field4" onMouseEnter={this.handleEnter} onMouseLeave={this.handleLeave} onClick={this.handleClick}>{field.imgSrc}</div>
       )
   })
   return rowOfFields
@@ -251,129 +251,6 @@ gameOver = (event) => {
               this.updateScore()
         
             } 
-
-  /*
-
-  if (this.state.fields[0].isClicked && this.state.fields[1].isClicked && this.state.fields[2].isClicked &&
-    this.state.fields[3].isClicked && this.state.fields[4].isClicked && this.state.fields[5].isClicked &&
-    this.state.fields[6].isClicked && this.state.fields[7].isClicked && this.state.fields[8].isClicked)
-    {
-      this.setState({gameOver: true})
-    }
-
-      else if (this.state.fields[0].fieldSign === "X" && this.state.fields[1].fieldSign === "X" && this.state.fields[2].fieldSign === "X")
-    {
-      this.setState({gameOver: true});
-      let currentScore = this.state.players[0]
-      currentScore.score++
-      this.setState({currentScore})
-    } else if (this.state.fields[0].fieldSign === "O" && this.state.fields[1].fieldSign === "O" && this.state.fields[2].fieldSign === "O") {
-      this.setState({gameOver: true});
-      let currentScore = this.state.players[1]
-      currentScore.score++
-      this.setState({currentScore})}
-
-
-      else if (this.state.fields[3].fieldSign === "X" && this.state.fields[4].fieldSign === "X" && this.state.fields[5].fieldSign === "X")
-    {
-      this.setState({gameOver: true})
-      let currentScore = this.state.players[0]
-      currentScore.score++
-      this.setState({currentScore})
-
-    } else if (this.state.fields[3].fieldSign === "O" && this.state.fields[4].fieldSign === "O" && this.state.fields[5].fieldSign === "O") {
-      this.setState({gameOver: true});
-      let currentScore = this.state.players[1]
-      currentScore.score++
-      this.setState({currentScore})
-   }
-
-
-      else if (this.state.fields[6].fieldSign === "X" && this.state.fields[7].fieldSign === "X" && this.state.fields[8].fieldSign === "X")
-    {
-      this.setState({gameOver: true});
-      let currentScore = this.state.players[0]
-      currentScore.score++
-      this.setState({currentScore})
-    } else if (this.state.fields[6].fieldSign === "O" && this.state.fields[7].fieldSign === "O" && this.state.fields[8].fieldSign === "O") {
-      this.setState({gameOver: true});
-      let currentScore = this.state.players[1]
-      currentScore.score++
-      this.setState({currentScore})
-    }
-
-      else if (this.state.fields[0].fieldSign === "X" && this.state.fields[4].fieldSign === "X" && this.state.fields[8].fieldSign === "X")
-    {
-      this.setState({gameOver: true});
-      let currentScore = this.state.players[0]
-      currentScore.score++
-      this.setState({currentScore})
-    } else if (this.state.fields[0].fieldSign === "O" && this.state.fields[4].fieldSign === "O" && this.state.fields[8].fieldSign === "O") {
-      this.setState({gameOver: true})
-      let currentScore = this.state.players[1]
-      currentScore.score++
-      this.setState({currentScore})
-    }
-
-      else if (this.state.fields[6].fieldSign === "O" && this.state.fields[7].fieldSign === "O" && this.state.fields[8].fieldSign === "O") {
-      this.setState({gameOver: true});
-      let currentScore = this.state.players[1]
-      currentScore.score++
-      this.setState({currentScore})
-    } else if (this.state.fields[2].fieldSign === "X" && this.state.fields[4].fieldSign === "X" && this.state.fields[6].fieldSign === "X")
-    {
-      this.setState({gameOver: true});
-      let currentScore = this.state.players[0]
-      currentScore.score++
-      this.setState({currentScore})
-    }
-
-
-      else if (this.state.fields[2].fieldSign === "O" && this.state.fields[4].fieldSign === "O" && this.state.fields[6].fieldSign === "O") {
-      this.setState({gameOver: true})
-      let currentScore = this.state.players[1]
-      currentScore.score++
-      this.setState({currentScore})
-    } else if (this.state.fields[0].fieldSign === "X" && this.state.fields[3].fieldSign === "X" && this.state.fields[6].fieldSign === "X")
-    {
-      this.setState({gameOver: true});
-      let currentScore = this.state.players[0]
-      currentScore.score++
-      this.setState({currentScore})
-    } else if (this.state.fields[0].fieldSign === "O" && this.state.fields[3].fieldSign === "O" && this.state.fields[6].fieldSign === "O") {
-      this.setState({gameOver: true})
-      let currentScore = this.state.players[1]
-      currentScore.score++
-      this.setState({currentScore})}
-
-
-      else if (this.state.fields[1].fieldSign === "X" && this.state.fields[4].fieldSign === "X" && this.state.fields[7].fieldSign === "X")
-    {
-      this.setState({gameOver: true});
-      let currentScore = this.state.players[0]
-      currentScore.score++
-      this.setState({currentScore})
-    } else if (this.state.fields[1].fieldSign === "O" && this.state.fields[4].fieldSign === "O" && this.state.fields[7].fieldSign === "O") {
-      this.setState({gameOver: true})
-      let currentScore = this.state.players[1]
-      currentScore.score++
-      this.setState({currentScore})
-    }
-
-
-      else if (this.state.fields[2].fieldSign === "X" && this.state.fields[5].fieldSign === "X" && this.state.fields[8].fieldSign === "X")
-    {
-      this.setState({gameOver: true});
-      let currentScore = this.state.players[0]
-      currentScore.score++
-      this.setState({currentScore})
-    } else if (this.state.fields[2].fieldSign === "O" && this.state.fields[5].fieldSign === "O" && this.state.fields[8].fieldSign === "O") {
-      this.setState({gameOver: true})
-      let currentScore = this.state.players[1]
-      currentScore.score++
-      this.setState({currentScore})
-    }*/
-  //}
     }
 
 startAgain = () => {
