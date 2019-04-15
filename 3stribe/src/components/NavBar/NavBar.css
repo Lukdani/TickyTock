@@ -1,0 +1,67 @@
+.navBar {
+    position:fixed;
+    margin-bottom: 20px;
+    display:flex;
+    align-items: flex-end;
+    height: 50px;
+    display: flex;
+    align-items:center;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.97);
+    top: 0px;
+    z-index: 1;
+    box-shadow: 0px 2px 10px #999;
+}
+
+.brand {
+    font-size: 20px;   
+    display: flex;
+    flex: 1;
+    font-family: 'ubuntu Condensed';
+    color: #fff;
+    background-color: #00120B;
+    padding: 2px 10px;
+    border-radius: 10px;
+    margin-left: 30px;
+    justify-content: center;
+    text-decoration:none;
+}
+
+.linkList {
+    display: flex;
+    flex-direction: row;
+    list-style: none;
+    height: 100%;
+    flex: 4;
+    justify-content: center;
+    margin: 0;
+    padding:0;
+}
+
+.NavLink {
+    display: flex;
+    flex: 2;
+    text-decoration: none;
+    padding: 2px 20px 2px 20px;
+    color:#000;
+    font-size: 18px;
+    font-family: 'Ubuntu Condensed';
+    align-items: center;
+    width:120px;
+    text-align:center;
+    justify-content: center;
+
+}
+
+NavLink:hover {
+    /*background-color: rgba(66, 76, 85);
+    color:white;*/
+    cursor: pointer;
+
+}
+
+
+.space {
+    display:flex;
+    flex: 1;
+}

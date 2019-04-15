@@ -1,0 +1,23 @@
+{
+  "name": "3stribe",
+  "version": "1.0.0",
+  "description": "A game of tic-tac-toe",
+  "main": "app.js",
+  "dependencies": {
+    "react-router-dom": "^5.0.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Lukdani/3stribe.git"
+  },
+  "author": "Lukdani",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Lukdani/3stribe/issues"
+  },
+  "homepage": "https://github.com/Lukdani/3stribe#readme"
+}

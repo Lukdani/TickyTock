@@ -1,8 +1,14 @@
 import React, { Component } from 'react';
 import './App.css';
 
+import NavBar from "./components/NavBar/NavBar";
+import TickTock4 from "./components/TickTock4/TickTock4";
+import TickTock3 from "./components/TickTock3/Tock3";
+
+import { BrowserRouter, Route } from 'react-router-dom';
+
 class App extends Component {
-  constructor() {
+  /*constructor() {
     super()
 
     this.createArray = this.createArray.bind(this);
@@ -12,7 +18,8 @@ class App extends Component {
     this.handleClick = this.handleClick.bind(this)
     this.updateScore = this.updateScore.bind()
     this.gameOver = this.gameOver.bind(this)  
-    this.startAgain = this.startAgain.bind(this)
+    this.startAgain = 
+this.startAgain.bind(this)
 
     //saves state in a variable so that the variable later can be used to reset the game
     this.initialState1 = {
@@ -35,8 +42,8 @@ class App extends Component {
     }
 
     this.state = this.initialState1;
-  }
-
+  }*/
+/*
   //Creates array with HTML markup based on the field array in state.
   createArray = (array) => {
     const rowOfFields = array.map(field => {
@@ -217,11 +224,6 @@ gameOver = (event) => {
         this.updateScore()
     }
 
-    else {
-
-    console.log(currentField.row+1)
-  }
-
   /*
 
   if (this.state.fields[0].isClicked && this.state.fields[1].isClicked && this.state.fields[2].isClicked &&
@@ -342,7 +344,7 @@ gameOver = (event) => {
       let currentScore = this.state.players[1]
       currentScore.score++
       this.setState({currentScore})
-    }*/
+    }
   //}
     }
 
@@ -375,31 +377,29 @@ createFields = (array => {
   return (
     <div className="gameContainer">{this.createArray(this.state.fields)}</div>
   )
-})
+}) */
 
   render() {
     return (
       <div className="App">
-        <header className="3 På Stribe">
-        </header>
-          <div className="gameHeader">
-            {this.state.gameOver ? <h1 id="gameOver">Game Over</h1> : <h1 id="gameHeading">3 På Stribe</h1>}
-          </div>
-          <div className="instructions">
-            <ol>
-              <li>Place an "X" or "O".</li>
-              <li>3 on a line wins a round.</li>
-              <li>Best out of 5 wins the game.</li>
-            </ol>
-            </div>
-            <div className="scoreBoard">
-              <p id="playerOneScore">X - points {this.state.players[0].score}</p>
-              <h2 id="startAgain" onClick={this.startAgain}>Start again?</h2>
-              <p id="playerTwoScore">O - points: {this.state.players[1].score}</p>
-            </div>
+        <BrowserRouter>
           <div>
-            {this.createFields(this.createArray(this.state.fields))}
-        </div>
+            <NavBar />
+            <div classname="content">
+              <div>
+                  <Route 
+                    path='/'
+                    render={(props) => <TickTock3 />} exact/>
+                  <Route 
+                    path='/tock3'
+                    render={(props) => <TickTock3 />}/>
+                  <Route 
+                  path='/tock4'
+                  render={(props) => <TickTock4/>}/>
+              </div>
+            </div>
+          </div>
+          </BrowserRouter>
       </div>
     );
   }

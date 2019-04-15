@@ -1,98 +1,10 @@
 .App {
   text-align: center;
-  font-family: 'ubuntu condensed'
-}
-
-#gameHeading {
+  font-family: 'ubuntu condensed';
   margin: 0;
   padding: 0;
-  font-size: 50px;
 }
 
-.gameHeader {
-  margin-top: 20px;
-  width: 30%;
-  margin-right: auto;
-  margin-left: auto;
-  font-family: 'indie flower';
-  color: #00120B;
-}
-
-#gameOver {
-  text-align:center;
-  font-size: 50px;
-  color: red;
-  margin: auto;
-  margin-top: 0;
-  padding: 0;
-}
-
-
-
-.instructions {
-  width: 30%;
-  margin: 0px auto;
-  font-size: 20px;
-}
-
-.gameContainer {
-  display: grid;
-  grid-template-columns: 33% 33% 33%;
-  width: 900px;
-  margin: 2px auto;
-  align-items: center;
-}
-
-.field {
-  display:grid;
-  height: 140px;
-  border: 1px solid #fff;
-  background-color: #38828F;
-  align-items: center;
-  font-size: 110px;
-  padding:0;
-  margin:0;
-  color: #ffffff;
-  font-family: 'indie flower'
-}
-
-.field:hover {
-  background-color: #442E39;
-  cursor:pointer;
-  color: #fff;
-}
-
-.scoreBoard {
-  width: 900px;
-  margin: 0 auto;
-  display: flex;
-  padding-bottom: 0;
-  margin-bottom: 0;
-}
-
-.scoreBoard p, h2 {
-  display: inline-block; 
-}
-
-#startAgain {
-  cursor: pointer;
-  flex: 1;
-  color: #00120B;
-  font-family: 'indie flower';
-  font-weight: 900;
-  font-size: 28px;
-  
-
-}
-
-#playerOneScore {
-  flex: 1;
-  font-size: 26px;
-  color:green;
-}
-
-#playerTwoScore {
-  flex: 1;
-  font-size: 26px;
-  color:blue;
+.content {
+  margin-top: 80px;
 }
