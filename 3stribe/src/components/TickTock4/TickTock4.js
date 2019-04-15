@@ -281,7 +281,7 @@ startAgain = () => {
   }
   this.setState(initialState)
   console.log(this.state);
-  const fieldElements = document.getElementsByClassName("field")
+  const fieldElements = document.getElementsByClassName("field4")
   Array.prototype.forEach.call(fieldElements, function(element) {
     element.innerHTML = ""})
 }

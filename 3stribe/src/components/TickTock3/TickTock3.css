@@ -15,7 +15,7 @@
   
   #gameOver {
     text-align:center;
-    font-size: 50px;
+    font-size: 30px;
     color: red;
     margin: auto;
     margin-top: 0;
@@ -31,7 +31,7 @@
   
   .gameContainer {
     display: grid;
-    grid-template-columns: 33% 33% 33%;
+    grid-template-columns: repeat(3, 1fr);
     width: 900px;
     margin: 2px auto;
     align-items: center;
@@ -39,7 +39,7 @@
   
   .gameContainerTock4 {
     display: grid;
-    grid-template-columns: 25% 25% 25% 25%;
+    grid-template-columns: repeat(4, 1fr);
     width: 900px;
     margin: 2px auto;
     align-items: center;
