@@ -163,14 +163,6 @@ gameOver = (event) => {
   const fieldSubFour = this.state.fields[eventIndex -4]
   const fieldSubEight = this.state.fields[eventIndex -8]
 
-
-  // mixed line variables
-/*
-  const rowPlusOne = this.state.fields[eventIndex].row
-  const fieldPlusSix = this.state.fields[eventIndex +6]
-  const fieldSubThree = this.state.fields[eventIndex -3]
-  const fieldSubSix = this.state.fields[eventIndex -6]*/
-
     if (fieldPlusOne !== undefined && fieldPlusOne.fieldSign === currentField.fieldSign && fieldPlusOne.row === currentField.row && fieldPlusTwo !== undefined && fieldPlusTwo.fieldSign === currentField.fieldSign && fieldPlusTwo.row === currentField.row) {
       this.setState({gameOver: true})
       this.updateScore()
@@ -224,18 +216,11 @@ gameOver = (event) => {
         this.setState({gameOver: true})
         this.updateScore()
     }
-  /*} else if (fieldPlusThree !== undefined && fieldPlusThree.fieldSign === currentField.fieldSign && fieldPlusThree.column === currentField.column && fieldSubThree !== undefined && fieldSubThree.fieldSign === currentField.fieldSign && fieldSubThree.column === currentField.column) {
-    this.setState({gameOver: true})
-  }  else if (fieldSubThree !== undefined && fieldSubThree.fieldSign === currentField.fieldSign && fieldSubThree.column === currentField.column && fieldSubSix !== undefined && fieldSubSix.fieldSign === currentField.fieldSign && fieldSubSix.column === currentField.column) {
-    this.setState({gameOver: true})*/
+
     else {
 
     console.log(currentField.row+1)
   }
-
-
-
-//}}
 
   /*
 
