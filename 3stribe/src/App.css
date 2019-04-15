@@ -14,7 +14,8 @@
   width: 30%;
   margin-right: auto;
   margin-left: auto;
-  font-family: 'indie flower'
+  font-family: 'indie flower';
+  color: #00120B;
 }
 
 #gameOver {
@@ -48,10 +49,11 @@
   border: 1px solid #fff;
   background-color: #38828F;
   align-items: center;
-  font-size: 50px;
+  font-size: 110px;
   padding:0;
   margin:0;
-  color: #fff;
+  color: #ffffff;
+  font-family: 'indie flower'
 }
 
 .field:hover {
@@ -64,6 +66,8 @@
   width: 900px;
   margin: 0 auto;
   display: flex;
+  padding-bottom: 0;
+  margin-bottom: 0;
 }
 
 .scoreBoard p, h2 {
@@ -73,6 +77,11 @@
 #startAgain {
   cursor: pointer;
   flex: 1;
+  color: #00120B;
+  font-family: 'indie flower';
+  font-weight: 900;
+  font-size: 28px;
+  
 
 }
 
