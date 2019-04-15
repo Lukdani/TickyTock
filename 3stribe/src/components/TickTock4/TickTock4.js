@@ -176,18 +176,25 @@ gameOver = (event) => {
   const fieldSubThree = this.state.fields[eventIndex - 3]
   const fieldSubSix = this.state.fields[eventIndex - 6]
 
+  if (this.state.fields[0].isClicked && this.state.fields[1].isClicked && this.state.fields[2].isClicked &&
+    this.state.fields[3].isClicked && this.state.fields[4].isClicked && this.state.fields[5].isClicked &&
+    this.state.fields[6].isClicked && this.state.fields[7].isClicked && this.state.fields[8].isClicked &&
+    this.state.fields[9].isClicked && this.state.fields[10].isClicked && this.state.fields[11].isClicked &&
+    this.state.fields[12].isClicked && this.state.fields[13].isClicked && this.state.fields[14].isClicked && 
+    this.state.fields[15].isClicked)
+  {
+  this.setState({gameOver: true})
+  }
+
     if (fieldPlusOne !== undefined && fieldPlusOne.fieldSign === currentField.fieldSign && fieldPlusOne.row === currentField.row && fieldPlusTwo !== undefined && fieldPlusTwo.fieldSign === currentField.fieldSign && fieldPlusTwo.row === currentField.row) {
-      this.setState({gameOver: true})
       this.updateScore()
       console.log(currentField.row+1)
 
 
   } else if (fieldPlusOne !== undefined && fieldPlusOne.fieldSign === currentField.fieldSign && fieldPlusOne.row === currentField.row && fieldSubOne !== undefined && fieldSubOne.fieldSign === currentField.fieldSign && fieldSubOne.row === currentField.row) {
-      this.setState({gameOver: true})
       this.updateScore()
 
   }  else if (fieldSubOne !== undefined && fieldSubOne.fieldSign === currentField.fieldSign && fieldSubOne.row === currentField.row && fieldSubTwo !== undefined && fieldSubTwo.fieldSign === currentField.fieldSign && fieldSubTwo.row === currentField.row) {
-      this.setState({gameOver: true})
       this.updateScore()
     }
 
@@ -195,17 +202,14 @@ gameOver = (event) => {
     //logic for setting game to over when 3 in column:
 
     if (fieldPlusFour!== undefined && fieldPlusFour.fieldSign === currentField.fieldSign && fieldPlusFour.column === currentField.column && fieldPlusEight !== undefined && fieldPlusEight.fieldSign === currentField.fieldSign && fieldPlusEight.column=== currentField.column) {
-      this.setState({gameOver: true})
       this.updateScore()
     }
 
     else if (fieldPlusFour!== undefined && fieldPlusFour.fieldSign === currentField.fieldSign && fieldPlusFour.column === currentField.column && fieldSubFour !== undefined && fieldSubFour.fieldSign === currentField.fieldSign && fieldSubFour.column === currentField.column) {
-      this.setState({gameOver: true})
       this.updateScore()
     }
 
     else if (fieldSubFour !== undefined && fieldSubFour.fieldSign === currentField.fieldSign && fieldSubFour.column === currentField.column && fieldSubEight !== undefined && fieldSubEight.fieldSign === currentField.fieldSign && fieldSubEight.column === currentField.column) {
-      this.setState({gameOver: true})
       this.updateScore()
 
   }
@@ -214,19 +218,16 @@ gameOver = (event) => {
 
   if (fieldPlusFive !== undefined && fieldPlusFive.fieldSign === currentField.fieldSign && fieldPlusFive.column === currentField.column+1 && fieldPlusFive.row === currentField.row+1 && 
     fieldPlusTen !== undefined && fieldPlusTen.fieldSign === currentField.fieldSign && fieldPlusTen.column=== currentField.column+2 && fieldPlusTen.row === currentField.row +2) {
-      this.setState({gameOver: true})
       this.updateScore()
    } 
    
    else if (fieldPlusFive !== undefined && fieldPlusFive.fieldSign === currentField.fieldSign && fieldPlusFive.column === currentField.column+1 && fieldPlusFive.row === currentField.row+1 && fieldSubFive !== undefined && fieldSubFive.fieldSign === currentField.fieldSign && fieldSubFive.column=== currentField.column-1 && fieldSubFive.row === currentField.row -1) {
-      this.setState({gameOver: true})
       this.updateScore()
 
     } 
     
     else if (fieldSubTen !== undefined && fieldSubTen.fieldSign === currentField.fieldSign && fieldSubTen.column === currentField.column-2 && fieldSubTen.row === currentField.row-2 && 
       fieldSubFive !== undefined && fieldSubFive.fieldSign === currentField.fieldSign && fieldSubFive.column=== currentField.column-1 && fieldSubFive.row === currentField.row -1) {
-        this.setState({gameOver: true})
         this.updateScore()
     }
 
@@ -234,20 +235,17 @@ gameOver = (event) => {
 
     if (fieldPlusThree !== undefined && fieldPlusThree.fieldSign === currentField.fieldSign && fieldPlusThree.column === currentField.column-1 && fieldPlusThree.row === currentField.row+1 && 
         fieldPlusSix !== undefined && fieldPlusSix.fieldSign === currentField.fieldSign && fieldPlusSix.column=== currentField.column-2 && fieldPlusSix.row === currentField.row +2) {
-          this.setState({gameOver: true})
           this.updateScore()
        } 
        
        else if (fieldPlusThree !== undefined && fieldPlusThree.fieldSign === currentField.fieldSign && fieldPlusThree.column === currentField.column-1 && fieldPlusThree.row === currentField.row+1 && 
         fieldSubThree !== undefined && fieldSubThree.fieldSign === currentField.fieldSign && fieldSubThree.column=== currentField.column+1 && fieldSubThree.row === currentField.row -1) {
-          this.setState({gameOver: true})
           this.updateScore()
     
         } 
         
         else if (fieldSubThree !== undefined && fieldSubThree.fieldSign === currentField.fieldSign && fieldSubThree.column === currentField.column+1 && fieldSubThree.row === currentField.row-1 && 
             fieldSubSix!== undefined && fieldSubSix.fieldSign === currentField.fieldSign && fieldSubSix.column=== currentField.column+2 && fieldSubSix.row === currentField.row -2) {
-              this.setState({gameOver: true})
               this.updateScore()
         
             } 
@@ -304,12 +302,11 @@ createFields = (array => {
             <ol>
               <li>Place an "X" or "O".</li>
               <li>3 on a line wins a round.</li>
-              <li>Best out of 5 wins the game.</li>
             </ol>
             </div>
             <div className="scoreBoard">
               <p id="playerOneScore">X - points {this.state.players[0].score}</p>
-              <h2 id="startAgain" onClick={this.startAgain}>Start again?</h2>
+              <h2 id="startAgain" onClick={this.startAgain} style={this.state.gameOver? {color: "red"} : {color: "black"}}>Start again?</h2>
               <p id="playerTwoScore">O - points: {this.state.players[1].score}</p>
             </div>
           <div>

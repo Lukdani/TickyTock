@@ -1,7 +1,7 @@
   #gameHeading {
     margin: 0;
     padding: 0;
-    font-size: 30px;
+    font-size: 40px;
   }
   
   .gameHeader {
@@ -15,7 +15,7 @@
   
   #gameOver {
     text-align:center;
-    font-size: 30px;
+    font-size: 40px;
     color: red;
     margin: auto;
     margin-top: 0;
@@ -26,7 +26,7 @@
   .instructions {
     width: 30%;
     margin: 0px auto;
-    font-size: 20px;
+    font-size: 16px;
   }
   
   .gameContainer {
@@ -76,6 +76,8 @@
   
   .scoreBoard p, h2 {
     display: inline-block; 
+    margin: 0;
+    margin-bottom: 6px;
   }
   
   #startAgain {

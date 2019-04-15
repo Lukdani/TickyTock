@@ -163,6 +163,12 @@ gameOver = (event) => {
   const fieldSubFour = this.state.fields[eventIndex -4]
   const fieldSubEight = this.state.fields[eventIndex -8]
 
+  if (this.state.fields[0].isClicked && this.state.fields[1].isClicked && this.state.fields[2].isClicked &&
+    this.state.fields[3].isClicked && this.state.fields[4].isClicked && this.state.fields[5].isClicked &&
+    this.state.fields[6].isClicked && this.state.fields[7].isClicked && this.state.fields[8].isClicked)
+    {
+      this.setState({gameOver: true})
+    }
 
     if (fieldPlusOne !== undefined && fieldPlusOne.fieldSign === currentField.fieldSign && fieldPlusOne.row === currentField.row && fieldPlusTwo !== undefined && fieldPlusTwo.fieldSign === currentField.fieldSign && fieldPlusTwo.row === currentField.row) {
       this.setState({gameOver: true})
@@ -302,12 +308,11 @@ createFields = (array => {
             <ol>
               <li>Place an "X" or "O".</li>
               <li>3 on a line wins a round.</li>
-              <li>Best out of 5 wins the game.</li>
             </ol>
             </div>
             <div className="scoreBoard">
               <p id="playerOneScore">X - points {this.state.players[0].score}</p>
-              <h2 id="startAgain" onClick={this.startAgain}>Start again?</h2>
+              <h2 id="startAgain" onClick={this.startAgain} style={this.state.gameOver? {color: "red"} : {color: "black"}}>Start again?</h2>
               <p id="playerTwoScore">O - points: {this.state.players[1].score}</p>
             </div>
           <div>
