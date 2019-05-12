@@ -110,7 +110,10 @@ class TickTock3 extends Component {
 
   //so computerPick() runs - conditionally - every time state changes
   componentDidUpdate() {
-    if (this.state.players[1].aI === true) {
+    if (
+      this.state.players[1].aI === true &&
+      this.state.players[1].turn === true
+    ) {
       this.computerPick();
     }
   }
@@ -215,10 +218,10 @@ class TickTock3 extends Component {
 
     //checks to see if isClicked of field is false and that value of gameOver is also false before executing code.
     if (
-      (clickedPropertyClicked.isClicked === false &&
-        this.state.gameOver === false &&
-        this.state.players[1].aI === false) ||
-      this.state.players[0].turn === true
+      clickedPropertyClicked.isClicked === false &&
+      this.state.gameOver === false &&
+      (this.state.players[1].aI === false ||
+        this.state.players[0].turn === true)
     ) {
       //saves the relevant field in a variable for later use.
       const clickedPropertyClickedSrc = this.state.fields[eventIndex];
