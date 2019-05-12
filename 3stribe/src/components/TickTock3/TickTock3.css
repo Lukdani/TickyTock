@@ -48,8 +48,8 @@
 .field {
   display: grid;
   height: 140px;
-  border: 1px solid #fff;
-  border-radius: 4%;
+  border: 0px solid #fff;
+  border-radius: 0%;
   /*background-color: #38828F;*/
   background-color: #266dd3;
   align-items: center;
@@ -60,9 +60,45 @@
   font-family: "indie flower";
 }
 
+.field1 {
+  background-color: #439a86;
+}
+
+.field2 {
+  background-color: #e9d985;
+}
+
+.field3 {
+  background-color: #007991;
+}
+
+.field4 {
+  background-color: #3aaed8;
+}
+
+.field4 {
+  background-color: #ff934f;
+}
+
+.field5 {
+  background-color: #69747c;
+}
+
+.field6 {
+  background-color: #f4442e;
+}
+
+.field7 {
+  background-color: #084887;
+}
+
+.field8 {
+  background-color: #bac7be;
+}
+
 .field:hover {
   /*background-color: #442E39;*/
-  background-color: #292f36;
+  /*background-color: #292f36;*/
   cursor: pointer;
   color: #fff;
 }

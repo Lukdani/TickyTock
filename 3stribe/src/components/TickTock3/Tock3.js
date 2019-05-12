@@ -124,7 +124,7 @@ class TickTock3 extends Component {
         <div
           key={field.id}
           id={field.id}
-          className="field"
+          className={"field" + " " + "field" + field.id}
           onMouseEnter={this.handleEnter}
           onMouseLeave={this.handleLeave}
           onClick={this.handleClick}

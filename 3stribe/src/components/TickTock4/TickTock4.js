@@ -183,7 +183,7 @@ class TickTock4 extends Component {
         <div
           key={field.id}
           id={field.id}
-          className="field4"
+          className="fieldTock4"
           onMouseEnter={this.handleEnter}
           onMouseLeave={this.handleLeave}
           onClick={this.handleClick}
@@ -623,7 +623,7 @@ class TickTock4 extends Component {
     };
     this.setState(initialState);
     console.log(this.state);
-    const fieldElements = document.getElementsByClassName("field4");
+    const fieldElements = document.getElementsByClassName("fieldTock4");
     Array.prototype.forEach.call(fieldElements, function(element) {
       element.innerHTML = "";
     });
