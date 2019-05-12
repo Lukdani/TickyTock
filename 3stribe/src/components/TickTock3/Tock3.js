@@ -530,7 +530,7 @@ class TickTock3 extends Component {
       } else if (emptyFields1.length === 1) {
         chosenField = emptyFields1[0];
         console.log(emptyFields1);
-      } else if (emptyFields1.length > 0) {
+      } else if (emptyFields1.length > 1) {
         const randomIndex1 =
           emptyFields1[randomInt(emptyFields1.length)].id - 1;
         chosenField = this.state.fields[randomIndex1];
