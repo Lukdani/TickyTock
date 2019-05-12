@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
-import './App.css';
+import React, { Component } from "react";
+import "./App.css";
 
 import NavBar from "./components/NavBar/NavBar";
 import TickTock4 from "./components/TickTock4/TickTock4";
 import TickTock3 from "./components/TickTock3/Tock3";
 
-import { BrowserRouter, Route } from 'react-router-dom';
+import { BrowserRouter, Route } from "react-router-dom";
 
 class App extends Component {
   /*constructor() {
@@ -43,7 +43,7 @@ this.startAgain.bind(this)
 
     this.state = this.initialState1;
   }*/
-/*
+  /*
   //Creates array with HTML markup based on the field array in state.
   createArray = (array) => {
     const rowOfFields = array.map(field => {
@@ -385,21 +385,15 @@ createFields = (array => {
         <BrowserRouter>
           <div>
             <NavBar />
-            <div classname="content">
+            <div className="content">
               <div>
-                  <Route 
-                    path='/'
-                    render={(props) => <TickTock3 />} exact/>
-                  <Route 
-                    path='/tock3'
-                    render={(props) => <TickTock3 />}/>
-                  <Route 
-                  path='/tock4'
-                  render={(props) => <TickTock4/>}/>
+                <Route path="/" render={props => <TickTock3 />} exact />
+                <Route path="/tock3" render={props => <TickTock3 />} />
+                <Route path="/tock4" render={props => <TickTock4 />} />
               </div>
             </div>
           </div>
-          </BrowserRouter>
+        </BrowserRouter>
       </div>
     );
   }
