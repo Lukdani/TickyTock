@@ -98,18 +98,21 @@ class TickTock3 extends Component {
         }
       ],
       gameOver: false,
+      draw: false,
       players: [
         {
           name: "Player One",
           score: 0,
           sign: "X",
-          turn: true
+          turn: true,
+          moves: 0
         },
         {
           name: "Player Two",
           score: 0,
           sign: "O",
           turn: false,
+          moves: 0,
           aI: true
         } //aI is always set to player two. May be changed in the future
       ],
@@ -123,12 +126,14 @@ class TickTock3 extends Component {
   componentDidUpdate() {
     if (
       this.state.players[1].aI === true &&
-      this.state.players[1].turn === true
+      this.state.players[1].turn === true &&
+      !this.state.gameOver
     ) {
       {
+        //I made a minor setTimeout to give a more realistic playing experience
         setTimeout(() => {
           this.computerPick();
-        }, 280);
+        }, 200);
       }
     }
   }
@@ -160,7 +165,7 @@ class TickTock3 extends Component {
       return (event.target.innerHTML = "X");
     };
     const decideSign = () => {
-      return this.state.sign === "X" ? changeToO() : changeToX();
+      return this.state.players[1].turn ? changeToO() : changeToX();
     };
 
     const eventIndex = parseInt(event.target.id) - 1;
@@ -168,7 +173,7 @@ class TickTock3 extends Component {
       this.state.fields[eventIndex].isClicked === false &&
       !this.state.gameOver &&
       (this.state.players[0].turn === true ||
-        this.state.players[0].aI === false)
+        this.state.players[1].aI === false)
     ) {
       decideSign();
     }
@@ -188,20 +193,28 @@ class TickTock3 extends Component {
     playerTwo.aI === true ? (playerTwo.aI = false) : (playerTwo.aI = true);
     this.setState({ playerTwo });
     this.startAgain();
+    this.resetScore();
   };
 
   updateScore = () => {
     let playerOne = this.state.players[0];
     let playerTwo = this.state.players[1];
-    let newScore = "";
-    playerOne.turn === false
-      ? (newScore = playerOne.score++)
-      : playerTwo.score++;
+    if (playerOne.turn) {
+      playerTwo.score++;
+      this.setState({ playerTwo });
+    } else {
+      playerOne.score++;
+      this.setState({ playerOne });
+    }
   };
 
   toggleSign = clickedField => {
-    clickedField.fieldSign = this.state.players[0].turn === false ? "X" : "O";
+    let playerOne = this.state.players[0];
+    let playerTwo = this.state.players[1];
+    clickedField.fieldSign = playerOne.turn ? playerTwo.sign : playerOne.sign;
+    playerOne.turn ? playerTwo.moves++ : playerOne.moves++;
     this.setState({ clickedField });
+    this.setState({ playerOne, playerTwo });
   };
 
   changePlayer = () => {
@@ -526,39 +539,50 @@ class TickTock3 extends Component {
   };
 
   computerPick = () => {
-    // row variables
+    //variable to contain the field that the AI chooses
+    let chosenField = "";
+
+    //List of fields that are needed to pick in order to counter human player
+    const counterMoves = this.state.fields.filter(this.counterOpponent);
+    const moves = this.state.fields.filter(field => field.isClicked === false);
+
+    //list of the moves that the AI should pick if
+    let firstMoves = [
+      this.state.fields[0],
+      this.state.fields[4],
+      this.state.fields[8]
+    ].filter(item => item.isClicked === false);
+
+    const randomInt = max => Math.floor(Math.random() * Math.floor(max));
+    const randomIndex = moves[randomInt(moves.length)].id - 1;
 
     if (this.state.players[0].turn === false && this.state.gameOver === false) {
-      const emptyFields1 = this.state.fields.filter(this.counterOpponent);
       //creates list of non-clicked fields
-
-      const emptyFields = this.state.fields.filter(
-        field => field.isClicked === false
-      );
       //method for creating random number to use as index
-      const randomInt = max => Math.floor(Math.random() * Math.floor(max));
       //creates randomIndex with above method
-      const randomIndex = emptyFields[randomInt(emptyFields.length)].id - 1;
-      let chosenField = "";
-      if (this.state.fields[4].isClicked === false) {
-        chosenField = this.state.fields[4];
-      } else if (emptyFields1.length === 1) {
-        chosenField = emptyFields1[0];
-        console.log(emptyFields1);
-      } else if (emptyFields1.length > 1) {
-        const randomIndex1 =
-          emptyFields1[randomInt(emptyFields1.length)].id - 1;
-        console.log(emptyFields1);
-        // if there are more than 1 option, the computer will pick between the two options randomly - to simulate mistakes
-        chosenField = this.state.fields[randomIndex1];
-      } else {
-        chosenField = this.state.fields[randomIndex];
-      }
-      chosenField.isClicked = true;
-      this.changePlayer();
-      this.toggleSign(chosenField);
-      this.gameOver(chosenField);
     }
+    //Makes a random move based on the 2-3 possibiles in firstMoves list. It is only meant to determine AI's first move.
+    if (counterMoves.length === 1) {
+      chosenField = counterMoves[0];
+    } else if (firstMoves.length > 0) {
+      chosenField = firstMoves[randomInt(firstMoves.length)];
+      //after making first move, AI should start to counter
+    } else if (counterMoves.length > 0) {
+      const randomIndex1 = counterMoves[randomInt(counterMoves.length)].id - 1;
+
+      // if there are more than 1 option, the computer will pick between the two options randomly - to simulate mistakes. So it may overlook a possibility for the human to win.
+      chosenField = this.state.fields[randomIndex1];
+    } else {
+      chosenField = this.state.fields[randomIndex];
+    }
+    //makes sure to change the chosenFields state to isClicked
+    chosenField.isClicked = true;
+    // changes player after AI made its move
+    this.changePlayer();
+    //see function for explanation
+    this.toggleSign(chosenField);
+    //checks to see if game has ended
+    this.gameOver(chosenField);
   };
 
   gameOver = field => {
@@ -597,7 +621,7 @@ class TickTock3 extends Component {
       this.state.fields[7].isClicked &&
       this.state.fields[8].isClicked
     ) {
-      this.setState({ gameOver: true });
+      this.setState({ gameOver: true, draw: true });
     }
 
     if (
@@ -784,6 +808,8 @@ class TickTock3 extends Component {
     const playerTwo = this.state.players[1];
     playerOne.turn = this.state.firstPick === "X" ? false : true;
     playerTwo.turn = this.state.firstPick === "X" ? true : false;
+    playerOne.moves = 0;
+    playerTwo.moves = 0;
     const initialState = {
       fields: [
         {
@@ -863,6 +889,7 @@ class TickTock3 extends Component {
       ],
       sign: "O",
       gameOver: false,
+      draw: false,
       firstPick: this.state.firstPick === "X" ? "O" : "X"
     };
     this.setState(initialState);
@@ -909,7 +936,14 @@ class TickTock3 extends Component {
         <header className="3 På Stribe" />
         <div className="gameHeader">
           {this.state.gameOver ? (
-            <h1 id="gameOver">Game Over</h1>
+            <h1 id="gameOver">
+              Game Over -{" "}
+              {this.state.draw
+                ? "It's a draw!"
+                : this.state.players[0].turn
+                ? "O wins!"
+                : "X wins!"}
+            </h1>
           ) : (
             <h1 id="gameHeading">TickyTock :o)</h1>
           )}
