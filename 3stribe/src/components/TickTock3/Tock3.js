@@ -97,12 +97,23 @@ class TickTock3 extends Component {
           column: 3
         }
       ],
-      sign: "O",
       gameOver: false,
       players: [
-        { name: "Player One", score: 0, sign: "X", turn: true },
-        { name: "Player Two", score: 0, sign: "O", turn: false, aI: true } //aI is always set to player two. May be changed in the future
-      ]
+        {
+          name: "Player One",
+          score: 0,
+          sign: "X",
+          turn: true
+        },
+        {
+          name: "Player Two",
+          score: 0,
+          sign: "O",
+          turn: false,
+          aI: true
+        } //aI is always set to player two. May be changed in the future
+      ],
+      firstPick: "X"
     };
 
     this.state = this.initialState1;
@@ -114,7 +125,11 @@ class TickTock3 extends Component {
       this.state.players[1].aI === true &&
       this.state.players[1].turn === true
     ) {
-      this.computerPick();
+      {
+        setTimeout(() => {
+          this.computerPick();
+        }, 280);
+      }
     }
   }
   //Creates array with HTML markup based on the field array in state.
@@ -149,9 +164,14 @@ class TickTock3 extends Component {
     };
 
     const eventIndex = parseInt(event.target.id) - 1;
-    this.state.fields[eventIndex].isClicked === false &&
+    if (
+      this.state.fields[eventIndex].isClicked === false &&
       !this.state.gameOver &&
+      (this.state.players[0].turn === true ||
+        this.state.players[0].aI === false)
+    ) {
       decideSign();
+    }
   };
 
   //Makes sure that the sign dissapears when mouse leaves field - of course only if isClicked is set to false.
@@ -171,24 +191,16 @@ class TickTock3 extends Component {
   };
 
   updateScore = () => {
-    if (this.state.sign === "O") {
-      let playerOne = this.state.players[0];
-      let newScore = playerOne.score++;
-      this.setState({ playerOne: newScore });
-    } else if (this.state.sign === "X") {
-      let playerOne = this.state.players[1];
-      let newScore = playerOne.score++;
-      this.setState({ playerOne: newScore });
-    } else {
-      console.log("An error occured.");
-    }
+    let playerOne = this.state.players[0];
+    let playerTwo = this.state.players[1];
+    let newScore = "";
+    playerOne.turn === false
+      ? (newScore = playerOne.score++)
+      : playerTwo.score++;
   };
 
   toggleSign = clickedField => {
-    this.state.sign === this.state.players[0].sign
-      ? this.setState({ sign: "O" })
-      : this.setState({ sign: "X" });
-    clickedField.fieldSign = this.state.sign === "X" ? "O" : "X";
+    clickedField.fieldSign = this.state.players[0].turn === false ? "X" : "O";
     this.setState({ clickedField });
   };
 
@@ -770,8 +782,8 @@ class TickTock3 extends Component {
   startAgain = () => {
     const playerOne = this.state.players[0];
     const playerTwo = this.state.players[1];
-    playerOne.turn = true;
-    playerTwo.turn = false;
+    playerOne.turn = this.state.firstPick === "X" ? false : true;
+    playerTwo.turn = this.state.firstPick === "X" ? true : false;
     const initialState = {
       fields: [
         {
@@ -850,7 +862,8 @@ class TickTock3 extends Component {
         }
       ],
       sign: "O",
-      gameOver: false
+      gameOver: false,
+      firstPick: this.state.firstPick === "X" ? "O" : "X"
     };
     this.setState(initialState);
     this.setState({ playerOne });
@@ -875,7 +888,18 @@ class TickTock3 extends Component {
 
   createFields = array => {
     return (
-      <div className="gameContainer">{this.createArray(this.state.fields)}</div>
+      <div
+        className="gameContainer"
+        style={
+          this.state.players[1].aI && this.state.players[1].turn
+            ? {
+                boxShadow: "0 0 10px 25px rgba(0, 0, 0, 0.2), 0 0 15px #ffffff"
+              }
+            : { boxShadow: "" }
+        }
+      >
+        {this.createArray(this.state.fields)}
+      </div>
     );
   };
 
@@ -908,13 +932,13 @@ class TickTock3 extends Component {
           <h2
             id="toggleAi"
             style={
-              this.state.players[1].aI
-                ? { color: "green" }
-                : { color: "red", textDecoration: "line-through" }
+              this.state.players[1].aI ? { color: "green" } : { color: "red" }
             }
             onClick={this.toggleAi}
           >
-            Play against robot{" "}
+            {this.state.players[1].aI
+              ? "Click for multiplayer"
+              : "Click for robot"}
           </h2>
           <h2 id="resetScore" onClick={this.resetScore}>
             Reset Score?{" "}
