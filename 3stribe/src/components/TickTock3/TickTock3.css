@@ -1,11 +1,11 @@
 #gameHeading {
   margin: 0;
   padding: 0;
-  font-size: 40px;
+  font-size: 22px;
 }
 
 .gameHeader {
-  margin-top: 10px;
+  margin-top: 5px;
   width: 30%;
   margin-right: auto;
   margin-left: auto;
@@ -15,7 +15,7 @@
 
 #gameOver {
   text-align: center;
-  font-size: 40px;
+  font-size: 22px;
   color: red;
   margin: auto;
   margin-top: 0;
@@ -23,16 +23,16 @@
 }
 
 .instructions {
-  width: 30%;
+  width: 20%;
   margin: 0px auto;
-  font-size: 16px;
+  font-size: 14px;
   margin-bottom: 20px;
 }
 
 .gameContainer {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  width: 900px;
+  width: 600px;
   margin: 15px auto;
   align-items: center;
 }
@@ -47,17 +47,18 @@
 
 .field {
   display: grid;
-  height: 140px;
+  height: 110px;
   border: 0px solid #fff;
   border-radius: 0%;
   /*background-color: #38828F;*/
   background-color: #266dd3;
   align-items: center;
-  font-size: 110px;
+  font-size: 95px;
   padding: 0;
   margin: 0;
   color: #ffffff;
   font-family: "indie flower";
+  z-index: 0;
 }
 
 .field1 {
@@ -124,7 +125,7 @@ h2 {
   color: #00120b;
   font-family: "indie flower";
   font-weight: 900;
-  font-size: 28px;
+  font-size: 22px;
 }
 
 #resetScore {
@@ -133,24 +134,26 @@ h2 {
   color: #00120b;
   font-family: "indie flower";
   font-weight: 900;
-  font-size: 28px;
+  font-size: 22px;
 }
 
 #playerOneScore {
   flex: 1;
-  font-size: 26px;
+  font-size: 22px;
   color: #2e5339;
 }
 
 #playerTwoScore {
   flex: 1;
-  font-size: 26px;
+  font-size: 22px;
   color: #6c0e23;
 }
 
-.toggleAi {
-  font-size: 20px;
-  padding: 0px;
+#toggleAi {
   cursor: pointer;
-  color: green;
+  flex: 1;
+  color: #00120b;
+  font-family: "indie flower";
+  font-weight: 900;
+  font-size: 22px;
 }

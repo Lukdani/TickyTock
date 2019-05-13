@@ -895,12 +895,6 @@ class TickTock3 extends Component {
             <li>3 on a line wins a round.</li>
           </ol>
         </div>
-        <div className="toggleAi">
-          <p onClick={this.toggleAi}>
-            Play against computer?{" "}
-            {this.state.players[1].aI ? "(activated)" : "(deactivated)"}
-          </p>
-        </div>
         <div className="scoreBoard">
           <p id="playerOneScore">X - points {this.state.players[0].score}</p>
           <h2
@@ -909,6 +903,17 @@ class TickTock3 extends Component {
             style={this.state.gameOver ? { color: "red" } : { color: "black" }}
           >
             New Round?
+          </h2>
+          <h2
+            id="toggleAi"
+            style={
+              this.state.players[1].aI
+                ? { color: "green" }
+                : { color: "red", textDecoration: "line-through" }
+            }
+            onClick={this.toggleAi}
+          >
+            Play against robot{" "}
           </h2>
           <h2 id="resetScore" onClick={this.resetScore}>
             Reset Score?{" "}
