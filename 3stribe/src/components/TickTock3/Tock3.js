@@ -537,6 +537,7 @@ class TickTock3 extends Component {
         const randomIndex1 =
           emptyFields1[randomInt(emptyFields1.length)].id - 1;
         console.log(emptyFields1);
+        // if there are more than 1 option, the computer will pick between the two options randomly - to simulate mistakes
         chosenField = this.state.fields[randomIndex1];
       } else {
         chosenField = this.state.fields[randomIndex];
@@ -920,7 +921,9 @@ class TickTock3 extends Component {
           </h2>
           <p id="playerTwoScore">O - points: {this.state.players[1].score}</p>
         </div>
-        <div>{this.createFields(this.createArray(this.state.fields))}</div>
+        <div className="board-wrapper">
+          {this.createFields(this.createArray(this.state.fields))}
+        </div>
       </div>
     );
   }
