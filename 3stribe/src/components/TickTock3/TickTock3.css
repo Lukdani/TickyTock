@@ -52,6 +52,12 @@
   margin: auto;
   background-image: url("wood.jpg");
   background-size: 100%;
+  -webkit-box-shadow: inset -1px 0px 48px -34px rgba(0, 0, 0, 1);
+  -moz-box-shadow: inset -1px 0px 48px -34px rgba(0, 0, 0, 1);
+  box-shadow: inset -1px 0px 48px -34px rgba(0, 0, 0, 1);
+  -webkit-box-shadow: -1px 0px 58px -34px rgba(0, 0, 0, 1);
+  -moz-box-shadow: -1px 0px 58px -34px rgba(0, 0, 0, 1);
+  box-shadow: -1px 0px 58px -34px rgba(0, 0, 0, 1);
 }
 
 .field {
