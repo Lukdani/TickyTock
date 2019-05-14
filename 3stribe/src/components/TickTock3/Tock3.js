@@ -977,9 +977,7 @@ class TickTock3 extends Component {
             }
             onClick={this.toggleAi}
           >
-            {this.state.players[1].aI
-              ? "Play against human"
-              : "Play against robot"}
+            {this.state.players[1].aI ? "Enable human" : "Enable robot"}
           </h2>
           <h2 id="resetScore" onClick={this.resetScore}>
             Reset Score?{" "}

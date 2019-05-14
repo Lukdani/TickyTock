@@ -23,7 +23,7 @@
 }
 
 .instructions {
-  width: 30%;
+  width: 25%;
   margin: 0px auto;
   font-size: 14px;
   margin-bottom: 20px;
@@ -143,6 +143,8 @@ h2 {
   display: inline-block;
   margin: 0;
   margin-bottom: 6px;
+  font-size: 20px;
+  font-weight: 900;
 }
 
 #startAgain {
@@ -150,8 +152,7 @@ h2 {
   flex: 1;
   color: #00120b;
   font-family: "indie flower";
-  font-weight: 900;
-  font-size: 22px;
+  font-size: 20px;
 }
 
 #resetScore {
@@ -159,19 +160,19 @@ h2 {
   flex: 1;
   color: #00120b;
   font-family: "indie flower";
-  font-weight: 900;
-  font-size: 22px;
 }
 
 #playerOneScore {
+  font-family: "ubuntu condensed";
   flex: 1;
-  font-size: 22px;
+  font-size: 21px;
   color: #2e5339;
 }
 
 #playerTwoScore {
+  font-family: "ubuntu condensed";
   flex: 1;
-  font-size: 22px;
+  font-size: 21px;
   color: #6c0e23;
 }
 
@@ -181,5 +182,4 @@ h2 {
   color: #00120b;
   font-family: "indie flower";
   font-weight: 900;
-  font-size: 22px;
 }
