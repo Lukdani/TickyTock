@@ -950,8 +950,15 @@ class TickTock3 extends Component {
         </div>
         <div className="instructions">
           <ol>
-            <li>Place an "X" or "O".</li>
-            <li>3 on a line wins a round.</li>
+            <li>
+              <span>Use the cursor to place an "X" or "O".</span>
+            </li>
+            <li>
+              <span>3 on a line wins a round.</span>
+            </li>
+            <li>
+              <span>Play against robot or human (toggle below).</span>
+            </li>
           </ol>
         </div>
         <div className="scoreBoard">
@@ -971,8 +978,8 @@ class TickTock3 extends Component {
             onClick={this.toggleAi}
           >
             {this.state.players[1].aI
-              ? "Click for multiplayer"
-              : "Click for robot"}
+              ? "Play against human"
+              : "Play against robot"}
           </h2>
           <h2 id="resetScore" onClick={this.resetScore}>
             Reset Score?{" "}
