@@ -40,7 +40,7 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   width: 500px;
-  margin: 15px auto;
+  margin: auto;
   align-items: center;
 }
 
@@ -53,11 +53,11 @@
   align-items: center;
 }
 .board-wrapper {
-  padding: 20px;
+  padding: 50px;
   background-color: #000;
-  width: 700px;
-  height: 75%;
-  margin: 10px auto;
+  width: 600px;
+  height: 300px;
+  margin: 2px auto;
   background-image: url("wood.jpg");
   background-size: 100%;
   -webkit-box-shadow: inset -1px 0px 48px -34px rgba(0, 0, 0, 1);
@@ -142,7 +142,7 @@
 h2 {
   display: inline-block;
   margin: 0;
-  margin-bottom: 6px;
+  margin-bottom: 3px;
   font-size: 20px;
   font-weight: 900;
 }
@@ -182,4 +182,20 @@ h2 {
   color: #00120b;
   font-family: "indie flower";
   font-weight: 900;
+}
+
+.aIDifficulty {
+  height: 35px;
+  width: 700px;
+  margin: 0px auto;
+}
+
+.aIDifficulty p {
+  display: inline-block;
+  font-family: "indie flower";
+  padding: 0px 12px;
+  padding-bottom: 0px;
+  font-size: 18px;
+  margin: 0px 3px;
+  cursor: pointer;
 }

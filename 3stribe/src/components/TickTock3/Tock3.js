@@ -18,6 +18,7 @@ class TickTock3 extends Component {
     this.toggleSign = this.toggleSign.bind(this);
     this.toggleAi = this.toggleAi.bind(this);
     this.counterOpponent = this.counterOpponent.bind(this);
+    this.changeDifficulty = this.changeDifficulty.bind(this);
 
     //saves state in a variable so that the variable later can be used to reset the game
     this.initialState1 = {
@@ -99,6 +100,8 @@ class TickTock3 extends Component {
       ],
       gameOver: false,
       draw: false,
+      gameModes: ["Easy", "Medium", "Hard"],
+      gameMode: "Easy",
       players: [
         {
           name: "Player One",
@@ -194,6 +197,10 @@ class TickTock3 extends Component {
     this.setState({ playerTwo });
     this.startAgain();
     this.resetScore();
+  };
+
+  changeDifficulty = difficulty => {
+    this.setState({ gameMode: difficulty });
   };
 
   updateScore = () => {
@@ -539,6 +546,7 @@ class TickTock3 extends Component {
   };
 
   computerPick = () => {
+    console.log(this.state);
     //variable to contain the field that the AI chooses
     let chosenField = "";
 
@@ -562,12 +570,12 @@ class TickTock3 extends Component {
       //creates randomIndex with above method
     }
     //Makes a random move based on the 2-3 possibiles in firstMoves list. It is only meant to determine AI's first move.
-    if (counterMoves.length === 1) {
+    if (counterMoves.length === 1 && this.state.gameMode !== "Easy") {
       chosenField = counterMoves[0];
-    } else if (firstMoves.length > 0) {
+    } else if (firstMoves.length > 0 && this.state.gameMode === "Hard") {
       chosenField = firstMoves[randomInt(firstMoves.length)];
       //after making first move, AI should start to counter
-    } else if (counterMoves.length > 0) {
+    } else if (counterMoves.length > 0 && this.state.gameMode != "Easy") {
       const randomIndex1 = counterMoves[randomInt(counterMoves.length)].id - 1;
 
       // if there are more than 1 option, the computer will pick between the two options randomly - to simulate mistakes. So it may overlook a possibility for the human to win.
@@ -918,7 +926,8 @@ class TickTock3 extends Component {
       <div
         className="gameContainer"
         style={
-          this.state.players[1].aI && this.state.players[1].turn
+          this.state.gameOver ||
+          (this.state.players[1].aI && this.state.players[1].turn)
             ? {
                 boxShadow: "0 0 10px 25px rgba(0, 0, 0, 0.2), 0 0 15px #ffffff"
               }
@@ -962,7 +971,7 @@ class TickTock3 extends Component {
           </ol>
         </div>
         <div className="scoreBoard">
-          <p id="playerOneScore">X - points {this.state.players[0].score}</p>
+          <p id="playerOneScore">X - points: {this.state.players[0].score}</p>
           <h2
             id="startAgain"
             onClick={this.startAgain}
@@ -983,6 +992,42 @@ class TickTock3 extends Component {
             Reset Score?{" "}
           </h2>
           <p id="playerTwoScore">O - points: {this.state.players[1].score}</p>
+        </div>
+        <div className="aIDifficulty">
+          {this.state.players[1].aI && (
+            <div>
+              <p
+                style={
+                  this.state.gameMode === "Easy"
+                    ? { color: "green", fontWeight: "bold" }
+                    : { color: "black" }
+                }
+                onClick={() => this.changeDifficulty("Easy")}
+              >
+                Easy
+              </p>
+              <p
+                style={
+                  this.state.gameMode === "Medium"
+                    ? { color: "green", fontWeight: "bold" }
+                    : { color: "black" }
+                }
+                onClick={() => this.changeDifficulty("Medium")}
+              >
+                Medium
+              </p>
+              <p
+                style={
+                  this.state.gameMode === "Hard"
+                    ? { color: "green", fontWeight: "bold" }
+                    : { color: "black" }
+                }
+                onClick={() => this.changeDifficulty("Hard")}
+              >
+                Hard
+              </p>
+            </div>
+          )}
         </div>
         <div className="board-wrapper">
           {this.createFields(this.createArray(this.state.fields))}
