@@ -957,19 +957,7 @@ class TickTock3 extends Component {
             <h1 id="gameHeading">TickyTock :o)</h1>
           )}
         </div>
-        <div className="instructions">
-          <ol>
-            <li>
-              <span>Use the cursor to place an "X" or "O".</span>
-            </li>
-            <li>
-              <span>3 on a line wins a round.</span>
-            </li>
-            <li>
-              <span>Play against robot or human (toggle below).</span>
-            </li>
-          </ol>
-        </div>
+
         <div className="scoreBoard">
           <p id="playerOneScore">X - points: {this.state.players[0].score}</p>
           <h2
@@ -1031,6 +1019,34 @@ class TickTock3 extends Component {
         </div>
         <div className="board-wrapper">
           {this.createFields(this.createArray(this.state.fields))}
+          {this.state.gameOver && (
+            <div className="popUp">
+              <h1 id="gameOver">
+                Game Over -{" "}
+                {this.state.draw
+                  ? "It's a draw!"
+                  : this.state.players[0].turn
+                  ? "O wins!"
+                  : "X wins!"}{" "}
+                <h2 id="startAgain" onClick={this.startAgain}>
+                  New Round?
+                </h2>
+              </h1>
+            </div>
+          )}
+        </div>
+        <div className="instructions">
+          <ol>
+            <li>
+              <span>Use the cursor to place an "X" or "O".</span>
+            </li>
+            <li>
+              <span>3 on a line wins a round.</span>
+            </li>
+            <li>
+              <span>Play against robot or human.</span>
+            </li>
+          </ol>
         </div>
       </div>
     );
