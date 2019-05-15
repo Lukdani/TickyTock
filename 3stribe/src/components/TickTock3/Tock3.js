@@ -127,15 +127,19 @@ class TickTock3 extends Component {
 
   //so computerPick() runs - conditionally - every time state changes
   componentDidUpdate() {
+    let ready = true;
     if (
       this.state.players[1].aI === true &&
       this.state.players[1].turn === true &&
       !this.state.gameOver
     ) {
-      {
+      if (ready) {
+        ready = false;
+        const readyChange = () => (ready = true);
         //I made a minor setTimeout to give a more realistic playing experience
         setTimeout(() => {
           this.computerPick();
+          readyChange();
         }, 200);
       }
     }
