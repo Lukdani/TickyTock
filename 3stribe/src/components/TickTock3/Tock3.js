@@ -1,5 +1,9 @@
 import React, { Component } from "react";
 import "./TickTock3.css";
+import ResetScore from "../resetScore.jsx";
+import AIDifficulty from "../AIDifficulty.jsx";
+import ToggleAI from "../ToggleAI";
+import ScoreBoard from "../ScoreBoard";
 
 class TickTock3 extends Component {
   constructor() {
@@ -17,7 +21,7 @@ class TickTock3 extends Component {
     this.changePlayer = this.changePlayer.bind(this);
     this.toggleSign = this.toggleSign.bind(this);
     this.toggleAi = this.toggleAi.bind(this);
-    this.counterOpponent = this.counterOpponent.bind(this);
+    this.counterMoves = this.counterMoves.bind(this);
     this.changeDifficulty = this.changeDifficulty.bind(this);
 
     //saves state in a variable so that the variable later can be used to reset the game
@@ -127,23 +131,15 @@ class TickTock3 extends Component {
 
   //so computerPick() runs - conditionally - every time state changes
   componentDidUpdate() {
-    let ready = true;
     if (
       this.state.players[1].aI === true &&
       this.state.players[1].turn === true &&
       !this.state.gameOver
     ) {
-      if (ready) {
-        ready = false;
-        const readyChange = () => (ready = true);
-        //I made a minor setTimeout to give a more realistic playing experience
-        setTimeout(() => {
-          this.computerPick();
-          readyChange();
-        }, 200);
-      }
+      this.computerPick();
     }
   }
+
   //Creates array with HTML markup based on the field array in state.
   createArray = array => {
     const rowOfFields = array.map(field => {
@@ -283,8 +279,8 @@ class TickTock3 extends Component {
     }
   };
 
-  counterOpponent = field => {
-    const opponentSign = this.state.players[0].sign;
+  // function to use as parameter for filtering a list of moves that can make AI win
+  winMoves = field => {
     const aISign = this.state.players[1].sign;
     const currentField = this.state.fields[field.id - 1];
     const currentFieldIndex = currentField.id - 1;
@@ -429,7 +425,34 @@ class TickTock3 extends Component {
         fieldSubFour.row === field.row - 2)
     ) {
       return field;
-    } else if (
+    }
+  };
+
+  // function to use as a parameter for filtering a list of moves to counter human win
+  counterMoves = field => {
+    const opponentSign = this.state.players[0].sign;
+    const currentField = this.state.fields[field.id - 1];
+    const currentFieldIndex = currentField.id - 1;
+    const fieldPlusOne = this.state.fields[currentFieldIndex + 1];
+    const fieldPlusTwo = this.state.fields[currentFieldIndex + 2]; //also used in mixed line
+    const fieldSubOne = this.state.fields[currentFieldIndex - 1];
+    const fieldSubTwo = this.state.fields[currentFieldIndex - 2];
+
+    //column variables
+
+    const fieldPlusThree = this.state.fields[currentFieldIndex + 3];
+    const fieldPlusSix = this.state.fields[currentFieldIndex + 6];
+    const fieldSubThree = this.state.fields[currentFieldIndex - 3];
+    const fieldSubSix = this.state.fields[currentFieldIndex - 6];
+
+    //mixed line variables
+
+    const fieldPlusFour = this.state.fields[currentFieldIndex + 4]; //also used in mixed line
+    const fieldPlusEight = this.state.fields[currentFieldIndex + 8];
+    const fieldSubFour = this.state.fields[currentFieldIndex - 4];
+    const fieldSubEight = this.state.fields[currentFieldIndex - 8];
+
+    if (
       (field.isClicked === false &&
         fieldPlusOne !== undefined &&
         fieldPlusOne.fieldSign === opponentSign &&
@@ -550,13 +573,13 @@ class TickTock3 extends Component {
   };
 
   computerPick = () => {
-    console.log(this.state);
     //variable to contain the field that the AI chooses
     let chosenField = "";
+    const moves = this.state.fields.filter(field => field.isClicked === false);
+    const winnerMoves = moves.filter(this.winMoves);
+    const counterMoves = moves.filter(this.counterMoves);
 
     //List of fields that are needed to pick in order to counter human player
-    const counterMoves = this.state.fields.filter(this.counterOpponent);
-    const moves = this.state.fields.filter(field => field.isClicked === false);
 
     //list of the moves that the AI should pick if
     let firstMoves = [
@@ -574,7 +597,9 @@ class TickTock3 extends Component {
       //creates randomIndex with above method
     }
     //Makes a random move based on the 2-3 possibiles in firstMoves list. It is only meant to determine AI's first move.
-    if (counterMoves.length === 1 && this.state.gameMode !== "Easy") {
+    if (winnerMoves.length > 0 && this.state.gameMode !== "Easy") {
+      chosenField = winnerMoves[0];
+    } else if (counterMoves.length > 0 && this.state.gameMode !== "Easy") {
       chosenField = counterMoves[0];
     } else if (firstMoves.length > 0 && this.state.gameMode === "Hard") {
       chosenField = firstMoves[randomInt(firstMoves.length)];
@@ -589,11 +614,8 @@ class TickTock3 extends Component {
     }
     //makes sure to change the chosenFields state to isClicked
     chosenField.isClicked = true;
-    // changes player after AI made its move
     this.changePlayer();
-    //see function for explanation
     this.toggleSign(chosenField);
-    //checks to see if game has ended
     this.gameOver(chosenField);
   };
 
@@ -621,20 +643,6 @@ class TickTock3 extends Component {
     const fieldPlusEight = this.state.fields[eventIndex + 8];
     const fieldSubFour = this.state.fields[eventIndex - 4];
     const fieldSubEight = this.state.fields[eventIndex - 8];
-
-    if (
-      this.state.fields[0].isClicked &&
-      this.state.fields[1].isClicked &&
-      this.state.fields[2].isClicked &&
-      this.state.fields[3].isClicked &&
-      this.state.fields[4].isClicked &&
-      this.state.fields[5].isClicked &&
-      this.state.fields[6].isClicked &&
-      this.state.fields[7].isClicked &&
-      this.state.fields[8].isClicked
-    ) {
-      this.setState({ gameOver: true, draw: true });
-    }
 
     if (
       fieldPlusOne !== undefined &&
@@ -669,8 +677,7 @@ class TickTock3 extends Component {
     }
 
     //logic for setting game to over when 3 in column:
-
-    if (
+    else if (
       fieldPlusThree !== undefined &&
       fieldPlusThree.fieldSign === currentField.fieldSign &&
       fieldPlusThree.column === currentField.column &&
@@ -703,8 +710,7 @@ class TickTock3 extends Component {
     }
 
     //logic for setting game to over when 3 in a mixed line:
-
-    if (
+    else if (
       fieldPlusFour !== undefined &&
       fieldPlusFour.fieldSign === currentField.fieldSign &&
       fieldPlusFour.column === currentField.column + 1 &&
@@ -740,9 +746,7 @@ class TickTock3 extends Component {
     ) {
       this.setState({ gameOver: true });
       this.updateScore();
-    }
-
-    if (
+    } else if (
       fieldPlusFour !== undefined &&
       fieldPlusFour.fieldSign === currentField.fieldSign &&
       fieldPlusFour.column === currentField.column + 1 &&
@@ -767,16 +771,8 @@ class TickTock3 extends Component {
       this.setState({ gameOver: true });
       this.updateScore();
     }
-
-    /*else if (fieldSubEight !== undefined && fieldSubEight.fieldSign === currentField.fieldSign && fieldSubEight.column === currentField.column-2 && fieldSubEight.row === currentField.row-2 && 
-      fieldSubFour !== undefined && fieldSubFour.fieldSign === currentField.fieldSign && fieldSubFour.column=== currentField.column-1 && fieldSubFour.row === currentField.row -1) {
-        this.setState({gameOver: true})
-        this.updateScore()
-    }*/
-
     // other way
-
-    if (
+    else if (
       fieldPlusTwo !== undefined &&
       fieldPlusTwo.fieldSign === currentField.fieldSign &&
       fieldPlusTwo.column === currentField.column - 1 &&
@@ -812,6 +808,18 @@ class TickTock3 extends Component {
     ) {
       this.setState({ gameOver: true });
       this.updateScore();
+    } else if (
+      this.state.fields[0].isClicked &&
+      this.state.fields[1].isClicked &&
+      this.state.fields[2].isClicked &&
+      this.state.fields[3].isClicked &&
+      this.state.fields[4].isClicked &&
+      this.state.fields[5].isClicked &&
+      this.state.fields[6].isClicked &&
+      this.state.fields[7].isClicked &&
+      this.state.fields[8].isClicked
+    ) {
+      this.setState({ gameOver: true, draw: true });
     }
   };
 
@@ -963,64 +971,33 @@ class TickTock3 extends Component {
         </div>
 
         <div className="scoreBoard">
-          <p id="playerOneScore">X - points: {this.state.players[0].score}</p>
+          <ScoreBoard
+            sign={this.state.players[0].sign}
+            score={this.state.players[0].score}
+          />
           <h2
             id="startAgain"
             onClick={this.startAgain}
-            style={this.state.gameOver ? { color: "red" } : { color: "black" }}
+            style={
+              this.state.gameOver && this.state.players[1].turn
+                ? { color: "red" }
+                : { color: "black" }
+            }
           >
             New Round?
           </h2>
-          <h2
-            id="toggleAi"
-            style={
-              this.state.players[1].aI ? { color: "green" } : { color: "red" }
-            }
-            onClick={this.toggleAi}
-          >
-            {this.state.players[1].aI ? "Enable human" : "Enable robot"}
-          </h2>
-          <h2 id="resetScore" onClick={this.resetScore}>
-            Reset Score?{" "}
-          </h2>
-          <p id="playerTwoScore">O - points: {this.state.players[1].score}</p>
+          <ToggleAI props={this.state} handleClick={this.toggleAi} />
+
+          <ResetScore handleReset={this.resetScore} />
+
+          <ScoreBoard
+            sign={this.state.players[1].sign}
+            score={this.state.players[1].score}
+          />
         </div>
-        <div className="aIDifficulty">
-          {this.state.players[1].aI && (
-            <div>
-              <p
-                style={
-                  this.state.gameMode === "Easy"
-                    ? { color: "green", fontWeight: "bold" }
-                    : { color: "black" }
-                }
-                onClick={() => this.changeDifficulty("Easy")}
-              >
-                Easy
-              </p>
-              <p
-                style={
-                  this.state.gameMode === "Medium"
-                    ? { color: "green", fontWeight: "bold" }
-                    : { color: "black" }
-                }
-                onClick={() => this.changeDifficulty("Medium")}
-              >
-                Medium
-              </p>
-              <p
-                style={
-                  this.state.gameMode === "Hard"
-                    ? { color: "green", fontWeight: "bold" }
-                    : { color: "black" }
-                }
-                onClick={() => this.changeDifficulty("Hard")}
-              >
-                Hard
-              </p>
-            </div>
-          )}
-        </div>
+
+        <AIDifficulty props={this.state} handleChange={this.changeDifficulty} />
+
         <div className="board-wrapper">
           {this.createFields(this.createArray(this.state.fields))}
           {this.state.gameOver && (
