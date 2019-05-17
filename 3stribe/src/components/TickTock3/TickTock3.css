@@ -33,7 +33,6 @@
   margin: 0 auto;
   margin-bottom: auto;
   margin-top: auto;
-  height: 50px;
   width: 200px;
 }
 
@@ -42,18 +41,42 @@
   display: block;
 }
 
+.popUp p {
+  font-size: 13px;
+  font-weight: normal;
+  color: black;
+}
+
 .instructions {
-  width: 25%;
+  width: 100%;
   margin: 0px auto;
   font-size: 14px;
   margin-bottom: 20px;
+  margin-top: 20px;
+  text-align: center;
+}
+
+.instructionsContent {
+  width: 300px;
+  margin: auto;
+}
+
+.instructions ol {
+  margin-top: 10px;
+}
+
+.instructions span {
+  left: 25px;
+  position: relative;
+}
+
+.instructions li {
   text-align: left;
 }
 
-.instructions li span {
-  position: relative;
-  left: 25px;
-  margin: auto;
+.instrucitons h2 {
+  margin-bottom: 0px;
+  padding-bottom: 0px;
 }
 
 .gameContainer {

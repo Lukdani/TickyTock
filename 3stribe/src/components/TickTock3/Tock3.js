@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import "./TickTock3.css";
-import ResetScore from "../resetScore.jsx";
 import AIDifficulty from "../AIDifficulty.jsx";
-import ToggleAI from "../ToggleAI";
-import ScoreBoard from "../ScoreBoard";
+import GameHeader from "./../GameHeader";
+import CreateBoard from "./../CreateBoard";
+import Instructions from "./../Instructions";
+import ScoreBoard from "./../ScoreBoard";
 
 class TickTock3 extends Component {
   constructor() {
@@ -955,80 +956,24 @@ class TickTock3 extends Component {
     return (
       <div className="content">
         <header className="3 På Stribe" />
-        <div className="gameHeader">
-          {this.state.gameOver ? (
-            <h1 id="gameOver">
-              Game Over -{" "}
-              {this.state.draw
-                ? "It's a draw!"
-                : this.state.players[0].turn
-                ? "O wins!"
-                : "X wins!"}
-            </h1>
-          ) : (
-            <h1 id="gameHeading">TickyTock :o)</h1>
-          )}
-        </div>
+        <GameHeader props={this.state} />
 
-        <div className="scoreBoard">
-          <ScoreBoard
-            sign={this.state.players[0].sign}
-            score={this.state.players[0].score}
-          />
-          <h2
-            id="startAgain"
-            onClick={this.startAgain}
-            style={
-              this.state.gameOver && this.state.players[1].turn
-                ? { color: "red" }
-                : { color: "black" }
-            }
-          >
-            New Round?
-          </h2>
-          <ToggleAI props={this.state} handleClick={this.toggleAi} />
-
-          <ResetScore handleReset={this.resetScore} />
-
-          <ScoreBoard
-            sign={this.state.players[1].sign}
-            score={this.state.players[1].score}
-          />
-        </div>
+        <ScoreBoard
+          props={this.state}
+          handleStartAgain={this.startAgain}
+          handleClick={this.toggleAi}
+          handleReset={this.resetScore}
+        />
 
         <AIDifficulty props={this.state} handleChange={this.changeDifficulty} />
+        <CreateBoard
+          props={this.state}
+          createFields={this.createFields}
+          createArray={this.createArray}
+          startAgain={this.startAgain}
+        />
 
-        <div className="board-wrapper">
-          {this.createFields(this.createArray(this.state.fields))}
-          {this.state.gameOver && (
-            <div className="popUp">
-              <h1 id="gameOver">
-                Game Over -{" "}
-                {this.state.draw
-                  ? "It's a draw!"
-                  : this.state.players[0].turn
-                  ? "O wins!"
-                  : "X wins!"}{" "}
-                <h2 id="startAgain" onClick={this.startAgain}>
-                  New Round?
-                </h2>
-              </h1>
-            </div>
-          )}
-        </div>
-        <div className="instructions">
-          <ol>
-            <li>
-              <span>Use the cursor to place an "X" or "O".</span>
-            </li>
-            <li>
-              <span>3 on a line wins a round.</span>
-            </li>
-            <li>
-              <span>Play against robot or human.</span>
-            </li>
-          </ol>
-        </div>
+        <Instructions />
       </div>
     );
   }
