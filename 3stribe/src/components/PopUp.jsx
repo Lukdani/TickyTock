@@ -11,7 +11,7 @@ const PopUp = ({ props, handleStartAgain }) => {
           ? "O wins!"
           : "X wins!"}{" "}
         <h2 id="startAgain" onClick={handleStartAgain}>
-          New Round?{" "}
+          Play Again?{" "}
         </h2>
         {(props.gameMode === "Easy" && (
           <p>

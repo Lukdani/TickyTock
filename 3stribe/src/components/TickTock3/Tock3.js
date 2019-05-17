@@ -124,7 +124,8 @@ class TickTock3 extends Component {
           aI: true
         } //aI is always set to player two. May be changed in the future
       ],
-      firstPick: "X"
+      firstPick: "X",
+      draws: 0
     };
 
     this.state = this.initialState1;
@@ -208,15 +209,22 @@ class TickTock3 extends Component {
     this.startAgain();
   };
 
-  updateScore = () => {
+  updateScore = result => {
     let playerOne = this.state.players[0];
     let playerTwo = this.state.players[1];
-    if (playerOne.turn) {
-      playerTwo.score++;
-      this.setState({ playerTwo });
+    let drawCount = this.state.draws;
+
+    if (result === "win") {
+      if (playerOne.turn) {
+        playerTwo.score++;
+        this.setState({ playerTwo });
+      } else {
+        playerOne.score++;
+        this.setState({ playerOne });
+      }
     } else {
-      playerOne.score++;
-      this.setState({ playerOne });
+      drawCount++;
+      this.setState({ draws: drawCount });
     }
   };
 
@@ -247,6 +255,7 @@ class TickTock3 extends Component {
   // This is where a lot of the magic happens. Watch comments below.
 
   handleClick = event => {
+    console.log(this.state.draws);
     //gets index of field in array by substracting 1 from id (as arrays start on index 0)
     const eventIndex = parseInt(event.target.id) - 1;
 
@@ -658,7 +667,7 @@ class TickTock3 extends Component {
       fieldPlusTwo.row === currentField.row
     ) {
       this.setState({ gameOver: true });
-      this.updateScore();
+      this.updateScore("win");
     } else if (
       fieldPlusOne !== undefined &&
       fieldPlusOne.fieldSign === currentField.fieldSign &&
@@ -668,7 +677,7 @@ class TickTock3 extends Component {
       fieldSubOne.row === currentField.row
     ) {
       this.setState({ gameOver: true });
-      this.updateScore();
+      this.updateScore("win");
     } else if (
       fieldSubOne !== undefined &&
       fieldSubOne.fieldSign === currentField.fieldSign &&
@@ -678,7 +687,7 @@ class TickTock3 extends Component {
       fieldSubTwo.row === currentField.row
     ) {
       this.setState({ gameOver: true });
-      this.updateScore();
+      this.updateScore("win");
     }
 
     //logic for setting game to over when 3 in column:
@@ -691,7 +700,7 @@ class TickTock3 extends Component {
       fieldPlusSix.column === currentField.column
     ) {
       this.setState({ gameOver: true });
-      this.updateScore();
+      this.updateScore("win");
     } else if (
       fieldPlusThree !== undefined &&
       fieldPlusThree.fieldSign === currentField.fieldSign &&
@@ -701,7 +710,7 @@ class TickTock3 extends Component {
       fieldSubThree.column === currentField.column
     ) {
       this.setState({ gameOver: true });
-      this.updateScore();
+      this.updateScore("win");
     } else if (
       fieldSubThree !== undefined &&
       fieldSubThree.fieldSign === currentField.fieldSign &&
@@ -711,7 +720,7 @@ class TickTock3 extends Component {
       fieldSubSix.column === currentField.column
     ) {
       this.setState({ gameOver: true });
-      this.updateScore();
+      this.updateScore("win");
     }
 
     //logic for setting game to over when 3 in a mixed line:
@@ -726,7 +735,7 @@ class TickTock3 extends Component {
       fieldPlusEight.row === currentField.row + 2
     ) {
       this.setState({ gameOver: true });
-      this.updateScore();
+      this.updateScore("win");
     } else if (
       fieldPlusFour !== undefined &&
       fieldPlusFour.fieldSign === currentField.fieldSign &&
@@ -738,7 +747,7 @@ class TickTock3 extends Component {
       fieldSubFour.row === currentField.row - 1
     ) {
       this.setState({ gameOver: true });
-      this.updateScore();
+      this.updateScore("win");
     } else if (
       fieldSubEight !== undefined &&
       fieldSubEight.fieldSign === currentField.fieldSign &&
@@ -750,7 +759,7 @@ class TickTock3 extends Component {
       fieldSubFour.row === currentField.row - 1
     ) {
       this.setState({ gameOver: true });
-      this.updateScore();
+      this.updateScore("win");
     } else if (
       fieldPlusFour !== undefined &&
       fieldPlusFour.fieldSign === currentField.fieldSign &&
@@ -762,7 +771,7 @@ class TickTock3 extends Component {
       fieldPlusEight.row === currentField.row + 2
     ) {
       this.setState({ gameOver: true });
-      this.updateScore();
+      this.updateScore("win");
     } else if (
       fieldPlusFour !== undefined &&
       fieldPlusFour.fieldSign === currentField.fieldSign &&
@@ -774,7 +783,7 @@ class TickTock3 extends Component {
       fieldSubFour.row === currentField.row - 1
     ) {
       this.setState({ gameOver: true });
-      this.updateScore();
+      this.updateScore("win");
     }
     // other way
     else if (
@@ -788,7 +797,7 @@ class TickTock3 extends Component {
       fieldPlusFour.row === currentField.row + 2
     ) {
       this.setState({ gameOver: true });
-      this.updateScore();
+      this.updateScore("win");
     } else if (
       fieldPlusTwo !== undefined &&
       fieldPlusTwo.fieldSign === currentField.fieldSign &&
@@ -800,7 +809,7 @@ class TickTock3 extends Component {
       fieldSubTwo.row === currentField.row - 1
     ) {
       this.setState({ gameOver: true });
-      this.updateScore();
+      this.updateScore("win");
     } else if (
       fieldSubTwo !== undefined &&
       fieldSubTwo.fieldSign === currentField.fieldSign &&
@@ -812,7 +821,7 @@ class TickTock3 extends Component {
       fieldSubFour.row === currentField.row - 2
     ) {
       this.setState({ gameOver: true });
-      this.updateScore();
+      this.updateScore("win");
     } else if (
       this.state.fields[0].isClicked &&
       this.state.fields[1].isClicked &&
@@ -825,6 +834,7 @@ class TickTock3 extends Component {
       this.state.fields[8].isClicked
     ) {
       this.setState({ gameOver: true, draw: true });
+      this.updateScore("draw");
     }
   };
 
@@ -835,6 +845,7 @@ class TickTock3 extends Component {
     playerTwo.turn = this.state.firstPick === "X" ? true : false;
     playerOne.moves = 0;
     playerTwo.moves = 0;
+    const currentDraws = this.state.draws;
     const initialState = {
       fields: [
         {
@@ -916,11 +927,14 @@ class TickTock3 extends Component {
       gameOver: false,
       draw: false,
       firstPick:
-        this.state.players[0].score > 0 || this.state.players[1].score > 0
+        this.state.players[0].score > 0 ||
+        this.state.players[1].score > 0 ||
+        this.state.draws > 0
           ? this.state.firstPick === "X"
             ? "O"
             : "X"
-          : "O"
+          : "O",
+      draws: currentDraws
     };
     this.setState(initialState);
     this.setState({ playerOne });
@@ -939,8 +953,7 @@ class TickTock3 extends Component {
     playerOne.turn = true;
     playerTwo.score = 0;
     playerTwo.turn = false;
-    this.setState({ playerOne });
-    this.setState({ playerTwo });
+    this.setState({ playerOne, playerTwo, draws: 0 });
   };
 
   createFields = array => {
