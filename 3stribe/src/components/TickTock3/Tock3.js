@@ -133,11 +133,13 @@ class TickTock3 extends Component {
   //so computerPick() runs - conditionally - every time state changes
   componentDidUpdate() {
     if (
-      this.state.players[1].aI === true &&
-      this.state.players[1].turn === true &&
+      this.state.players[1].aI &&
+      this.state.players[1].turn &&
       !this.state.gameOver
     ) {
-      this.computerPick();
+      setTimeout(() => {
+        this.computerPick();
+      }, 200);
     }
   }
 
@@ -202,6 +204,8 @@ class TickTock3 extends Component {
 
   changeDifficulty = difficulty => {
     this.setState({ gameMode: difficulty });
+    this.resetScore();
+    this.startAgain();
   };
 
   updateScore = () => {
@@ -911,7 +915,12 @@ class TickTock3 extends Component {
       sign: "O",
       gameOver: false,
       draw: false,
-      firstPick: this.state.firstPick === "X" ? "O" : "X"
+      firstPick:
+        this.state.players[0].score > 0 || this.state.players[1].score > 0
+          ? this.state.firstPick === "X"
+            ? "O"
+            : "X"
+          : "O"
     };
     this.setState(initialState);
     this.setState({ playerOne });
@@ -956,8 +965,10 @@ class TickTock3 extends Component {
     return (
       <div className="content">
         <header className="3 På Stribe" />
+        {/* gameheader that says "TickyTock :)*/}
         <GameHeader props={this.state} />
 
+        {/*this is the panel right below the gameheade that show points, button to reset score etc*/}
         <ScoreBoard
           props={this.state}
           handleStartAgain={this.startAgain}
@@ -965,7 +976,10 @@ class TickTock3 extends Component {
           handleReset={this.resetScore}
         />
 
+        {/*this is the button to change difficulty of AI if AI is enabled */}
         <AIDifficulty props={this.state} handleChange={this.changeDifficulty} />
+
+        {/* this is the game board it self */}
         <CreateBoard
           props={this.state}
           createFields={this.createFields}
@@ -973,6 +987,7 @@ class TickTock3 extends Component {
           startAgain={this.startAgain}
         />
 
+        {/* this is the instructions shown below the game board */}
         <Instructions />
       </div>
     );

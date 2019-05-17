@@ -2,14 +2,7 @@ import React from "react";
 
 const PopUp = ({ props, handleStartAgain }) => {
   return (
-    <div
-      className="popUp"
-      style={
-        props.gameMode === "Easy" || props.gameMode === "Medium"
-          ? { height: "100px" }
-          : { height: "50px" }
-      }
-    >
+    <div className="popUp">
       <h1 id="gameOver">
         Game Over -{" "}
         {props.draw
