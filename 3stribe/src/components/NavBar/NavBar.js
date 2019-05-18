@@ -11,10 +11,10 @@ class NavBar extends React.Component {
         </NavLink>
         <div className="linkList">
           <NavLink to="/tock3" className="NavLink">
-            Easy
+            Play
           </NavLink>
           <NavLink to="/tock4" className="NavLink">
-            Difficult
+            Play 4x4 (beta)
           </NavLink>
           <div className="space" />
         </div>
